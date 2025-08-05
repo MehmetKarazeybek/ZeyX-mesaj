@@ -118,7 +118,7 @@ class BackendTester:
         
         # Test 1: Valid login
         login_data = {
-            "username": "ahmet_test",
+            "username": f"ahmet_test_{self.unique_suffix}",
             "password": "test123456"
         }
         
