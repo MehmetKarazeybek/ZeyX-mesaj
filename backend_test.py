@@ -24,6 +24,7 @@ class BackendTester:
         self.test_results = {}
         self.auth_token = None
         self.test_user_id = None
+        self.unique_suffix = str(int(time.time()))  # Make usernames unique
         
     def log_test(self, test_name, success, message="", details=None):
         """Log test results"""
