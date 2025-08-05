@@ -12,6 +12,7 @@ import time
 from datetime import datetime
 import sys
 import os
+import random
 
 # Get backend URL from frontend .env file
 BACKEND_URL = "https://7c71c63d-39c6-4fa9-abf6-a9e80bedf165.preview.emergentagent.com"
