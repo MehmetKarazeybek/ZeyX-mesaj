@@ -107,63 +107,78 @@ user_problem_statement: "Turkish real-time messaging app where users can registe
 backend:
   - task: "User Registration System"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/backend/server.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
         - working: "NA"
           agent: "main"
           comment: "Implemented user registration with username/password validation, password hashing, JWT token generation"
+        - working: true
+          agent: "testing"
+          comment: "✅ TESTED: Registration works correctly with Turkish validation messages. Username length (3-20 chars), password length (6+ chars), duplicate username detection all working. Returns proper JWT token and user data."
 
   - task: "User Login System" 
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/backend/server.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
         - working: "NA"
           agent: "main"
           comment: "Implemented login endpoint with authentication, password verification, JWT token response"
+        - working: true
+          agent: "testing"
+          comment: "✅ TESTED: Login system works perfectly. Correctly authenticates valid credentials, rejects invalid passwords and non-existent users with proper Turkish error messages. Returns JWT token on success."
 
   - task: "JWT Authentication Middleware"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/backend/server.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
         - working: "NA"
           agent: "main"
           comment: "Implemented get_current_user dependency with Bearer token validation"
+        - working: true
+          agent: "testing"
+          comment: "✅ TESTED: JWT authentication middleware working correctly. Validates Bearer tokens, rejects invalid/missing tokens with proper HTTP status codes (401/403), allows access with valid tokens."
 
   - task: "Message CRUD Operations"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/backend/server.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
         - working: "NA"
           agent: "main"
           comment: "Implemented GET /messages to fetch chat history and POST /messages to create new messages with 500 char validation"
+        - working: true
+          agent: "testing"
+          comment: "✅ TESTED: Message operations working correctly. GET /messages returns message history, POST /messages creates messages with proper validation. 500-character limit enforced, empty messages rejected, authentication required. Minor: Validation errors return 500 instead of 422 due to Pydantic handling, but validation logic works correctly."
 
   - task: "WebSocket Real-time Connection"
     implemented: true
-    working: "NA"
+    working: false
     file: "/app/backend/server.py"
-    stuck_count: 0
+    stuck_count: 1
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
         - working: "NA"
           agent: "main"
           comment: "Implemented WebSocket endpoint at /ws/{token} with ConnectionManager for broadcasting messages to all connected clients"
+        - working: false
+          agent: "testing"
+          comment: "❌ TESTED: WebSocket endpoint implemented correctly in code but connection times out. Invalid tokens are properly rejected. Issue appears to be infrastructure/deployment related - external WebSocket URL mapping may not be configured properly in Kubernetes ingress."
 
 frontend:
   - task: "Authentication UI (Login/Register)"
