@@ -101,7 +101,7 @@ class BackendTester:
         
         # Test 4: Password too short (Turkish validation)
         try:
-            short_pass_data = {"username": f"mehmet_test_{self.unique_suffix}", "password": "123"}
+            short_pass_data = {"username": f"mehmet{self.unique_suffix[-5:]}", "password": "123"}
             response = self.session.post(f"{API_BASE_URL}/auth/register", json=short_pass_data)
             if response.status_code == 422:
                 self.log_test("Password Length Validation", True, 
