@@ -143,7 +143,7 @@ class BackendTester:
         
         # Test 2: Invalid credentials
         try:
-            invalid_data = {"username": f"ahmet_test_{self.unique_suffix}", "password": "wrongpassword"}
+            invalid_data = {"username": f"ahmet{self.unique_suffix[-6:]}", "password": "wrongpassword"}
             response = self.session.post(f"{API_BASE_URL}/auth/login", json=invalid_data)
             if response.status_code == 400:
                 error_msg = response.json().get("detail", "")
