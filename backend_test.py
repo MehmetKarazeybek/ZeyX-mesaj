@@ -329,12 +329,13 @@ class BackendTester:
         
         # Test 1: Valid WebSocket connection
         try:
-            async with websockets.connect(ws_url, timeout=10) as websocket:
-                self.log_test("Valid WebSocket Connection", True, 
-                            "Successfully connected to WebSocket with valid token")
-                
-                # Test keeping connection alive for a moment
-                await asyncio.sleep(1)
+            websocket = await websockets.connect(ws_url)
+            self.log_test("Valid WebSocket Connection", True, 
+                        "Successfully connected to WebSocket with valid token")
+            
+            # Test keeping connection alive for a moment
+            await asyncio.sleep(1)
+            await websocket.close()
                 
         except websockets.exceptions.ConnectionClosedError as e:
             if e.code == 1008:  # Policy violation - invalid token
@@ -349,9 +350,10 @@ class BackendTester:
         # Test 2: Invalid token WebSocket connection
         try:
             invalid_ws_url = BACKEND_URL.replace("https://", "wss://") + "/ws/invalid_token"
-            async with websockets.connect(invalid_ws_url, timeout=5) as websocket:
-                self.log_test("Invalid WebSocket Token", False, 
-                            "WebSocket accepted invalid token")
+            websocket = await websockets.connect(invalid_ws_url)
+            await websocket.close()
+            self.log_test("Invalid WebSocket Token", False, 
+                        "WebSocket accepted invalid token")
         except websockets.exceptions.ConnectionClosedError as e:
             if e.code == 1008:  # Policy violation
                 self.log_test("Invalid WebSocket Token", True, 
