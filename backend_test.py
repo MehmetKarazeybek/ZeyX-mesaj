@@ -46,7 +46,7 @@ class BackendTester:
         
         # Test 1: Valid registration
         test_data = {
-            "username": "ahmet_test",
+            "username": f"ahmet_test_{self.unique_suffix}",
             "password": "test123456"
         }
         
